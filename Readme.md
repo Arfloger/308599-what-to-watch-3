@@ -1,7 +1,6 @@
 # Личный проект «Что посмотреть» [![Build status][travis-image]][travis-url]
 
 * Студент: [Ксения Мельникова](https://up.htmlacademy.ru/react/3/user/308599).
-* Наставник: `Неизвестно`.
 
 ---
 
