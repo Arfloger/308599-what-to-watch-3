@@ -2,8 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import SmallMovieCard from '../small-movie-card/small-movie-card.jsx';
 
-const MoviesList = ({films}) => {
+const movieTitleHandle = () => {};
 
+const MoviesList = ({films}) => {
   return (
     <div className="catalog__movies-list">
       {films.map((it) => (
@@ -11,6 +12,7 @@ const MoviesList = ({films}) => {
           title={it.title}
           photo={it.background}
           key={it.id}
+          onMovieTitleClick={movieTitleHandle}
         />
       ))}
     </div>
