@@ -19,8 +19,8 @@ App.propTypes = {
   year: PropTypes.number,
   films: PropTypes.arrayOf(
       PropTypes.shape({
-        title: PropTypes.string.isRequired,
-        background: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+        posterImage: PropTypes.string.isRequired,
       })
   ),
 };

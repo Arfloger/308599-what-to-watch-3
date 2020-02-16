@@ -1,8 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<SmallMovieCard/> should render title and photo 1`] = `
+exports[`<SmallMovieCard/> should render correctly 1`] = `
 <article
   className="small-movie-card catalog__movies-card"
+  onMouseLeave={[Function]}
 >
   <div
     className="small-movie-card__image"
