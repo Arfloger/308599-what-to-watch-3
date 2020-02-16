@@ -1,28 +1,10 @@
-import React, {PureComponent} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import MoviesList from '../movies-list/movies-list.jsx';
 
-class Main extends PureComponent {
-  constructor(props) {
-    super(props);
+const Main = ({title, genre, year, films}) => {
 
-    this.state = {
-      activeCard: {},
-    };
-
-    this._handleMovieMouseLeave = this._handleMovieMouseLeave.bind(this);
-  }
-
-  _handleMovieMouseLeave(activeCard) {
-    this.setState({
-      activeCard
-    });
-  }
-
-  render() {
-    const {title, genre, year, films} = this.props;
-
-    return (<>
+  return (<>
       <div className="visually-hidden">
         <svg xmlns="http://www.w3.org/2000/svg" xlinkHref="http://www.w3.org/1999/xlink">
           <symbol id="add" viewBox="0 0 19 20">
@@ -143,7 +125,6 @@ class Main extends PureComponent {
       </ul>
 
       <MoviesList
-        onMovieMouseLeave={this._handleMovieMouseLeave}
         films={films}
       />
 
@@ -167,9 +148,8 @@ class Main extends PureComponent {
     </footer>
   </div>
   </>
-    );
-  }
-}
+  );
+};
 
 Main.propTypes = {
   title: PropTypes.string,

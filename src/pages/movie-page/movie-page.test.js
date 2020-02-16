@@ -1,15 +1,11 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import App from './app.jsx';
+import MoviePage from './movie-page.jsx';
 
-it(`<App/> shold render correctly`, () => {
+it(`<MoviePage/> shold render correctly`, () => {
   const tree = renderer
     .create(
-        <App
-          title={``}
-          year={0}
-          genre={``}
-          films={[]}
+        <MoviePage
           mainMovie={{
             id: 1,
             name: ``,
