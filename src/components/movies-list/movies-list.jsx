@@ -33,6 +33,7 @@ class MoviesList extends PureComponent {
             title={it.name}
             photo={it.posterImage}
             key={it.id}
+            previewVideoLink={it.previewVideoLink}
             onMovieMouseLeave={this._handleMovieMouseLeave}
             onMovieTitleClick={this._movieTitleHandle}
           />

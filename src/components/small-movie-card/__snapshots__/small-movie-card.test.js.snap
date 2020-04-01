@@ -3,15 +3,17 @@
 exports[`<SmallMovieCard/> should render correctly 1`] = `
 <article
   className="small-movie-card catalog__movies-card"
+  onMouseEnter={[Function]}
   onMouseLeave={[Function]}
 >
   <div
     className="small-movie-card__image"
   >
-    <img
-      alt="Красавица и чудовище"
+    <video
       height="175"
-      src="img/my-image.jpg"
+      muted={true}
+      poster="img/my-image.jpg"
+      src="https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4"
       width="280"
     />
   </div>

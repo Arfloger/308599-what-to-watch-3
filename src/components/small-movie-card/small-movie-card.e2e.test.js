@@ -24,18 +24,32 @@ it(`Should title be pressed`, () => {
   expect(onMovieTitleClick.mock.calls.length).toBe(1);
 });
 
-it(`Pointing to the card and receiving information about it`, () => {
-  const onMovieMouseLeave = jest.fn();
+it(`onMouseEnter event is correctly`, () => {
 
-  const card = {
-    title: ``,
-    photo: ``,
-  };
+  const smallMovieCard = shallow(<SmallMovieCard
+    title={``}
+    photo={``}
+    previewVideoLink={`test`}
+    onMovieTitleClick={() => {}}
+  />);
+
+
+  const movieCard = smallMovieCard.find(`.small-movie-card`);
+  movieCard.simulate(`mouseEnter`);
+
+  setTimeout(() => {
+    expect(smallMovieCard.state(`isVideoPlaying`)).toEqual(true);
+  }, 1000);
+});
+
+it(`onMouseLeave event is correctly`, () => {
+  const onMovieMouseLeave = jest.fn();
 
   const smallMovieCard = shallow(
       <SmallMovieCard
         title={``}
         photo={``}
+        previewVideoLink={``}
         onMovieMouseLeave={onMovieMouseLeave}
       />
   );
@@ -46,6 +60,5 @@ it(`Pointing to the card and receiving information about it`, () => {
   cardsOne.simulate(`mouseleave`);
 
   expect(onMovieMouseLeave).toHaveBeenCalledTimes(1);
-  expect(onMovieMouseLeave.mock.calls[0][0]).toMatchObject(card);
+  expect(smallMovieCard.state(`isVideoPlaying`)).toEqual(false);
 });
-
