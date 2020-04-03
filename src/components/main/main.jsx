@@ -2,6 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import MoviesList from '../movies-list/movies-list.jsx';
 import GenresList from '../genres-list/genres-list.jsx';
+import withActiveItem from '../../hocs/with-active-item/with-active-item';
+
+const WithGenresList = withActiveItem(GenresList);
 
 const Main = ({title, genre, year, films}) => {
 
@@ -92,7 +95,7 @@ const Main = ({title, genre, year, films}) => {
     <section className="catalog">
       <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-      <GenresList
+      <WithGenresList
         films={films}
       />
 
