@@ -1,10 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<SmallMovieCard/> should render correctly 1`] = `
+exports[`SmallMovieCard correctly renders after relaunch 1`] = `
 <article
   className="small-movie-card catalog__movies-card"
   onMouseEnter={[Function]}
   onMouseLeave={[Function]}
+  onMouseOver={[Function]}
 >
   <div
     className="small-movie-card__image"
@@ -12,8 +13,6 @@ exports[`<SmallMovieCard/> should render correctly 1`] = `
     <video
       height="175"
       muted={true}
-      poster="img/my-image.jpg"
-      src="https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4"
       width="280"
     />
   </div>
@@ -23,9 +22,7 @@ exports[`<SmallMovieCard/> should render correctly 1`] = `
     <a
       className="small-movie-card__link"
       href="movie-page.html"
-    >
-      Красавица и чудовище
-    </a>
+    />
   </h3>
 </article>
 `;

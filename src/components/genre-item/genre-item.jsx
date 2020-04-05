@@ -6,6 +6,7 @@ export default class GenreItem extends PureComponent {
     super(props);
   }
 
+
   render() {
     const {genreName, activeTab, onClick} = this.props;
 
