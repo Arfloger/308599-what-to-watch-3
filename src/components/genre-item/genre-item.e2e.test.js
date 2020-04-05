@@ -12,7 +12,7 @@ it(`GenreItem click is correctly`, () => {
       <GenreItem
         genreName={``}
         activeTab={false}
-        onGenreTabClick={clickHandler}/>);
+        onClick={clickHandler}/>);
 
   const genreItemLink = genreItem.find(`.catalog__genres-link`).first();
 
@@ -20,3 +20,4 @@ it(`GenreItem click is correctly`, () => {
 
   expect(clickHandler).toHaveBeenCalledTimes(1);
 });
+

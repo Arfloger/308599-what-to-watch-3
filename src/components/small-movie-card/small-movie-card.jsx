@@ -1,8 +1,11 @@
 import React, {PureComponent} from 'react';
+import {Link} from "react-router-dom";
 import PropTypes from 'prop-types';
-import Video from '../video/video.jsx';
 
-class SmallMovieCard extends PureComponent {
+import VideoPlayer from '../video-player/video-player.jsx';
+
+export default class SmallMovieCard extends PureComponent {
+
   constructor(props) {
     super(props);
 
@@ -32,43 +35,35 @@ class SmallMovieCard extends PureComponent {
   }
 
   render() {
-    const {title, photo, previewVideoLink, onMovieTitleClick, onMovieMouseLeave} = this.props;
+    const {movie} = this.props;
     const {isVideoPlaying} = this.state;
 
     return (
       <article
         className="small-movie-card catalog__movies-card"
-        onMouseLeave={() => {
-          onMovieMouseLeave({photo, title});
-          this._handleMouseLeave();
-        }}
         onMouseEnter={this._handleMouseEnter}
+        onMouseLeave={this._handleMouseLeave}
       >
-        <div className="small-movie-card__image">
-          <Video
-            src={previewVideoLink}
-            poster={photo}
-            isPlaying={isVideoPlaying}
-          />
-        </div>
-        <h3 className="small-movie-card__title">
-          <a
-            className="small-movie-card__link"
-            href="movie-page.html"
-            onClick={onMovieTitleClick}
-          >{title}</a>
-        </h3>
+        <Link
+          to={`/films/${movie.id}`}
+          className="small-movie-card__link"
+        >
+          <div className="small-movie-card__image">
+            <VideoPlayer
+              src={movie.preview_video_link}
+              poster={movie[`background_image`]}
+              isPlaying={isVideoPlaying}
+            />
+
+          </div>
+          <h3 className="small-movie-card__title">{movie.name}</h3>
+        </Link>
       </article>
     );
   }
+
 }
 
 SmallMovieCard.propTypes = {
-  title: PropTypes.string.isRequired,
-  photo: PropTypes.string.isRequired,
-  previewVideoLink: PropTypes.string,
-  onMovieTitleClick: PropTypes.func,
-  onMovieMouseLeave: PropTypes.func,
+  movie: PropTypes.object.isRequired,
 };
-
-export default SmallMovieCard;

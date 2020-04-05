@@ -1,38 +1,66 @@
 import React from 'react';
 import Enzyme, {shallow} from 'enzyme';
-import Adater from 'enzyme-adapter-react-16';
-import SmallMovieCard from './small-movie-card.jsx';
+import Adapter from 'enzyme-adapter-react-16';
 
-Enzyme.configure({
-  adapter: new Adater(),
-});
+import SmallMovieCard from "./small-movie-card.jsx";
 
-it(`Should title be pressed`, () => {
-  const onMovieTitleClick = jest.fn();
+Enzyme.configure({adapter: new Adapter()});
 
-  const smallMovieCard = shallow(
-      <SmallMovieCard
-        title={``}
-        photo={``}
-        onMovieTitleClick={onMovieTitleClick}
-      />
-  );
+it(`SmallMovieCard is correctly`, () => {
+  const film = {
+    id: 2,
+    name: `War of the worlds`,
+    posterImage: `img/war-of-the-worlds.jpg`,
+    previewImage: `img/war-of-the-worlds.jpg`,
+    backgroundImage: `img/the-grand-budapest-hotel-bg.jpg`,
+    videoLink: `https://some-link`,
+    previewVideoLink: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
+    description: `In the 1930s, the Grand Budapest Hotel is a popular European ski resort, presided over by concierge Gustave H. (Ralph Fiennes). Zero, a junior lobby boy, becomes Gustave's friend and protege.`,
+    rating: 8.9,
+    scoresCount: 240,
+    director: `Wes Andreson`,
+    starring: [`Bill Murray`, `Edward Norton`, `Jude Law`, `Willem Dafoe`, `Saoirse Ronan`],
+    runTime: 39,
+    genre: `Sitcom`,
+    released: 2019,
+    isFavorite: true,
+  };
 
-  const titleElement = smallMovieCard.find(`.small-movie-card__link`);
-  titleElement.props().onClick();
+  const mouseHoverHandler = jest.fn();
+  const smallMovieCard = shallow(<SmallMovieCard
+    movie={film}
+    onMovie={mouseHoverHandler}
+  />);
 
-  expect(onMovieTitleClick.mock.calls.length).toBe(1);
+  const movieCard = smallMovieCard.find(`.small-movie-card`);
+  movieCard.simulate(`mouseOver`);
+
+  expect(mouseHoverHandler).toHaveBeenCalledTimes(1);
+  expect(mouseHoverHandler).toHaveBeenCalledWith(film);
 });
 
 it(`onMouseEnter event is correctly`, () => {
-
+  const film = {
+    id: 2,
+    name: `War of the worlds`,
+    posterImage: `img/war-of-the-worlds.jpg`,
+    previewImage: `img/war-of-the-worlds.jpg`,
+    backgroundImage: `img/the-grand-budapest-hotel-bg.jpg`,
+    videoLink: `https://some-link`,
+    previewVideoLink: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
+    description: `In the 1930s, the Grand Budapest Hotel is a popular European ski resort, presided over by concierge Gustave H. (Ralph Fiennes). Zero, a junior lobby boy, becomes Gustave's friend and protege.`,
+    rating: 8.9,
+    scoresCount: 240,
+    director: `Wes Andreson`,
+    starring: [`Bill Murray`, `Edward Norton`, `Jude Law`, `Willem Dafoe`, `Saoirse Ronan`],
+    runTime: 39,
+    genre: `Sitcom`,
+    released: 2019,
+    isFavorite: true,
+  };
   const smallMovieCard = shallow(<SmallMovieCard
-    title={``}
-    photo={``}
-    previewVideoLink={`test`}
-    onMovieTitleClick={() => {}}
+    movie={film}
   />);
-
 
   const movieCard = smallMovieCard.find(`.small-movie-card`);
   movieCard.simulate(`mouseEnter`);
@@ -43,22 +71,31 @@ it(`onMouseEnter event is correctly`, () => {
 });
 
 it(`onMouseLeave event is correctly`, () => {
-  const onMovieMouseLeave = jest.fn();
+  const film = {
+    id: 2,
+    name: `War of the worlds`,
+    posterImage: `img/war-of-the-worlds.jpg`,
+    previewImage: `img/war-of-the-worlds.jpg`,
+    backgroundImage: `img/the-grand-budapest-hotel-bg.jpg`,
+    videoLink: `https://some-link`,
+    previewVideoLink: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
+    description: `In the 1930s, the Grand Budapest Hotel is a popular European ski resort, presided over by concierge Gustave H. (Ralph Fiennes). Zero, a junior lobby boy, becomes Gustave's friend and protege.`,
+    rating: 8.9,
+    scoresCount: 240,
+    director: `Wes Andreson`,
+    starring: [`Bill Murray`, `Edward Norton`, `Jude Law`, `Willem Dafoe`, `Saoirse Ronan`],
+    runTime: 39,
+    genre: `Sitcom`,
+    released: 2019,
+    isFavorite: true,
+  };
 
-  const smallMovieCard = shallow(
-      <SmallMovieCard
-        title={``}
-        photo={``}
-        previewVideoLink={``}
-        onMovieMouseLeave={onMovieMouseLeave}
-      />
-  );
+  const smallMovieCard = shallow(<SmallMovieCard
+    movie={film}
+  />);
 
-  const cards = smallMovieCard.find(`.small-movie-card`);
-  const cardsOne = cards.at(0);
+  const movieCard = smallMovieCard.find(`.small-movie-card`);
+  movieCard.simulate(`mouseLeave`);
 
-  cardsOne.simulate(`mouseleave`);
-
-  expect(onMovieMouseLeave).toHaveBeenCalledTimes(1);
   expect(smallMovieCard.state(`isVideoPlaying`)).toEqual(false);
 });

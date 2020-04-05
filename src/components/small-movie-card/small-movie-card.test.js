@@ -1,21 +1,14 @@
-import React from 'react';
-import renderer from 'react-test-renderer';
-import SmallMovieCard from './small-movie-card.jsx';
+import React from "react";
+import renderer from "react-test-renderer";
 
-const title = `Красавица и чудовище`;
-const photo = `img/my-image.jpg`;
-const previewVideoLink = `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`;
+import SmallMovieCard from "./small-movie-card.jsx";
 
-it(`<SmallMovieCard/> should render correctly`, () => {
+it(`SmallMovieCard correctly renders after relaunch`, () => {
   const tree = renderer
-    .create(
-        <SmallMovieCard
-          title={title}
-          photo={photo}
-          previewVideoLink={previewVideoLink}
-          onMovieMouseLeave={() => {}}
-        />
-    ).toJSON();
+    .create(<SmallMovieCard
+      movie={{}}
+      onMovie={() => {}}
+    />).toJSON();
 
   expect(tree).toMatchSnapshot();
 });
