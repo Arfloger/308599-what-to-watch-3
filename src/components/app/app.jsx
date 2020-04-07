@@ -1,27 +1,38 @@
-import React, {PureComponent} from 'react';
-import {BrowserRouter, Switch, Route} from 'react-router-dom';
+import React from "react";
+import {BrowserRouter, Route, Switch} from "react-router-dom";
 
-import Main from '../main/main.jsx';
-import MoviePage from '../movie-page/movie-page.jsx';
-import SignIn from '../sign-in/sign-in.jsx';
+import MoviePage from "../movie-page/movie-page.jsx";
+import MainPage from "../main-page/main-page.jsx";
+import SignIn from "../sign-in/sign-in.jsx";
+import AddReviewPage from "../add-review-page/add-review-page.jsx";
+import MoviePlayer from "../movie-player/movie-player.jsx";
+import {MyList} from "../my-list/my-list.jsx";
+import {NotFound} from "../not-found/not-found.jsx";
 
-export default class App extends PureComponent {
-  constructor(props) {
-    super(props);
-  }
+import {withPrivateRoute} from "../../hocs/with-private-route/with-private-route";
+import {withMoviePlayer} from "../../hocs/with-movie-player/with-movie-player";
+import {withSessionStorage} from "../../hocs/with-session-storage/with-session-storage";
 
-  render() {
+const AddReviewPagePrivate = withPrivateRoute(AddReviewPage);
+const MyListPrivate = withPrivateRoute(MyList);
+const MoviePlayerWrapped = withMoviePlayer(withSessionStorage(MoviePlayer));
+const MoviePageWrapped = withSessionStorage(MoviePage);
 
-    return (
-      <BrowserRouter>
-        <Switch>
-          <Route path="/" exact component={Main}/>
-          <Route path="/login" component={SignIn}/>
-          <Route exact path="/films/:id" component={({match: {params: {id}}}) => {
-            return (<MoviePage currentId={+id}/>);
-          }}/>
-        </Switch>
-      </BrowserRouter>
-    );
-  }
-}
+export const AppSettings = {
+  MOVIES_INIT_LENGTH: 8,
+  MOVIES_TO_LOAD: 8
+};
+
+export const App = () => {
+  return <BrowserRouter>
+    <Switch>
+      <Route path="/" component={MainPage} exact />
+      <Route path="/login" component={SignIn} exact />
+      <Route path="/movie/:movieId/add-review" component={AddReviewPagePrivate} />
+      <Route path="/movie/:movieId/watch" component={MoviePlayerWrapped} />
+      <Route path="/movie/:movieId" component={MoviePageWrapped} />
+      <Route path="/my-list" component={MyListPrivate} exact/>
+      <Route component={NotFound} />
+    </Switch>
+  </BrowserRouter>;
+};

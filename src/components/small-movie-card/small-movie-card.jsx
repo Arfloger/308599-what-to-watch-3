@@ -1,69 +1,79 @@
-import React, {PureComponent} from 'react';
+import React from "react";
+import PropTypes from "prop-types";
+import {connect} from "react-redux";
 import {Link} from "react-router-dom";
-import PropTypes from 'prop-types';
 
-import VideoPlayer from '../video-player/video-player.jsx';
+import VideoPlayer from "../video-player/video-player.jsx";
 
-export default class SmallMovieCard extends PureComponent {
+import {ActionCreator} from "../../reducer/reducer";
 
-  constructor(props) {
-    super(props);
+export const SmallMovieCard = (props) => {
+  const {movie, onMovieEnter, onMovieLeave, isPlaying, onMovieClick} = props;
+  const {name, id} = movie;
 
-    this._videoTimeout = null;
+  const handleMovieClick = () => {
+    onMovieClick(id - 1);
+  };
 
-    this.state = {
-      isVideoPlaying: false,
-    };
-
-    this._handleMouseLeave = this._handleMouseLeave.bind(this);
-    this._handleMouseEnter = this._handleMouseEnter.bind(this);
-  }
-
-  _handleMouseEnter() {
-    this._videoTimeout = setTimeout(() => {
-      this.setState({
-        isVideoPlaying: true,
-      });
-    }, 1000);
-  }
-
-  _handleMouseLeave() {
-    clearTimeout(this._videoTimeout);
-    this.setState({
-      isVideoPlaying: false,
-    });
-  }
-
-  render() {
-    const {movie} = this.props;
-    const {isVideoPlaying} = this.state;
-
-    return (
-      <article
-        className="small-movie-card catalog__movies-card"
-        onMouseEnter={this._handleMouseEnter}
-        onMouseLeave={this._handleMouseLeave}
+  return (
+    <article
+      className="small-movie-card catalog__movies-card"
+      onMouseEnter={onMovieEnter}
+      onMouseLeave={onMovieLeave}
+    >
+      <Link
+        to={`/movie/${id}`}
+        className="small-movie-card__link"
+        onClick={handleMovieClick}
       >
-        <Link
-          to={`/films/${movie.id}`}
-          className="small-movie-card__link"
-        >
-          <div className="small-movie-card__image">
-            <VideoPlayer
-              src={movie.preview_video_link}
-              poster={movie[`background_image`]}
-              isPlaying={isVideoPlaying}
-            />
-
-          </div>
-          <h3 className="small-movie-card__title">{movie.name}</h3>
-        </Link>
-      </article>
-    );
-  }
-
-}
+        <div className="small-movie-card__image">
+          <VideoPlayer
+            src={movie[`preview_video_link`]}
+            poster={movie[`preview_image`]}
+            muted={true}
+            width={280}
+            height={175}
+            playerState={isPlaying}
+          />
+        </div>
+        <h3 className="small-movie-card__title">
+          <span className="small-movie-card__link">{name}</span>
+        </h3>
+      </Link>
+    </article>
+  );
+};
 
 SmallMovieCard.propTypes = {
-  movie: PropTypes.object.isRequired,
+  movie: PropTypes.shape({
+    id: PropTypes.number,
+    name: PropTypes.string,
+    posterImage: PropTypes.string,
+    previewImage: PropTypes.string,
+    backgroundImage: PropTypes.string,
+    backgroundColor: PropTypes.string,
+    videoLink: PropTypes.string,
+    previewVideoLink: PropTypes.string,
+    description: PropTypes.string,
+    rating: PropTypes.number,
+    scoresCount: PropTypes.number,
+    director: PropTypes.string,
+    starring: PropTypes.array.string,
+    runTime: PropTypes.number,
+    genre: PropTypes.string,
+    released: PropTypes.number,
+    isFavorite: PropTypes.bool,
+  }).isRequired,
+  onMovieEnter: PropTypes.func,
+  onMovieLeave: PropTypes.func,
+  isPlaying: PropTypes.bool,
+  onMovieClick: PropTypes.func
 };
+
+const mapDispatchToProps = (dispatch) => ({
+  onMovieClick: (movieId) => {
+    dispatch(ActionCreator.updateCurrentMovie(movieId));
+  }
+});
+
+export default connect(null, mapDispatchToProps)(SmallMovieCard);

@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Is MainPage rendered 1`] = `
+<Fragment>
+  <Connect(WithGetStore)
+    history={Object {}}
+  />
+  <div
+    className="page-content"
+  >
+    <WithGenreCatalog />
+    <PageFooter />
+  </div>
+</Fragment>
+`;
