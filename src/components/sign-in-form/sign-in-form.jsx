@@ -1,67 +1,49 @@
-import React, {PureComponent} from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-export default class SignInForm extends PureComponent {
-  constructor(props) {
-    super(props);
-  }
+export const SignInForm = (props) => {
+  const {onUserInput, onSubmit, validation} = props;
 
-  render() {
-    const {onEmailInput, onPasswordInput, onSubmitForm, isValidEmail, isValidPassword, message} = this.props;
-
-    return (
-      <div className="sign-in user-page__content">
-        <form action="#" className="sign-in__form">
-          {message ? <div className="sign-in__message">
-            <p>{message}</p>
-          </div> : null}
-
-          <div className={isValidEmail ? `sign-in__field` : `sign-in__field sign-in__field--error`}>
-            <input
-              className="sign-in__input"
-              type="email"
-              placeholder="Email address"
-              name="user-email"
-              id="user-email"
-              onChange={onEmailInput}/>
-
-            <label className="sign-in__label visually-hidden" htmlFor="user-email">Email address</label>
-          </div>
-
-          <div className={isValidPassword ? `sign-in__field` : `sign-in__field sign-in__field--error`}>
-            <input
-              className="sign-in__input"
-              type="password"
-              placeholder="Password"
-              name="user-password"
-              id="user-password"
-              onChange={onPasswordInput}
-            />
-            <label className="sign-in__label visually-hidden" htmlFor="user-password">Password</label>
-          </div>
-
-
-          <div className="sign-in__submit">
-            <button
-              className="sign-in__btn"
-              type="submit"
-              disabled={isValidEmail && isValidPassword ? false : true}
-              onClick={onSubmitForm}
-            >
-              Sign in
-            </button>
-          </div>
-        </form>
+  return <form action="#" className="sign-in__form">
+    {validation.message ? <div className="sign-in__message">
+      <p>{validation.message}</p>
+    </div> : null}
+    <div className="sign-in__fields">
+      <div className={validation.email ? `sign-in__field` : `sign-in__field sign-in__field--error`}>
+        <input
+          className="sign-in__input"
+          type="email"
+          placeholder="Email address"
+          name="email"
+          id="user-email"
+          onChange={onUserInput}
+        />
+        <label className="sign-in__label visually-hidden" htmlFor="user-email">Email address</label>
       </div>
-    );
-  }
-}
+      <div className={validation.password ? `sign-in__field` : `sign-in__field sign-in__field--error`}>
+        <input
+          className="sign-in__input"
+          type="password"
+          placeholder="Password"
+          name="password"
+          id="password"
+          onChange={onUserInput}
+        />
+        <label className="sign-in__label visually-hidden" htmlFor="user-password">Password</label>
+      </div>
+    </div>
+    <div className="sign-in__submit">
+      <button className="sign-in__btn" type="button" onClick={onSubmit}>Sign in</button>
+    </div>
+  </form>;
+};
 
 SignInForm.propTypes = {
-  onEmailInput: PropTypes.func,
-  onPasswordInput: PropTypes.func,
-  onSubmitForm: PropTypes.func,
-  isValidEmail: PropTypes.bool,
-  isValidPassword: PropTypes.bool,
-  message: PropTypes.string,
+  onUserInput: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+  validation: PropTypes.shape({
+    email: PropTypes.bool.isRequired,
+    password: PropTypes.bool.isRequired,
+    message: PropTypes.string
+  })
 };

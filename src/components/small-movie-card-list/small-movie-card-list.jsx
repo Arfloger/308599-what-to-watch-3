@@ -1,33 +1,43 @@
-import React, {PureComponent} from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-import SmallMovieCard from '../small-movie-card/small-movie-card.jsx';
+import SmallMovieCard from "../small-movie-card/small-movie-card.jsx";
 
-export default class SmallMovieCardList extends PureComponent {
-  constructor(props) {
-    super(props);
-  }
+import {withMovieHover} from "../../hocs/with-movie-hover/with-movie-hover";
 
-  render() {
-    const {movies, quantityCard} = this.props;
+const MovieWrapped = withMovieHover(SmallMovieCard);
 
-    if (movies) {
-      return (
-        <div className="catalog__movies-list">
-          {movies.map((it) =>
-            <SmallMovieCard
-              key={it.id}
-              movie={it}
-            />).slice(0, quantityCard)}
-        </div>
-      );
-    } else {
-      return <div>Loading...</div>;
-    }
-  }
-}
+export const SmallMovieCardList = (props) => {
+  const {movies} = props;
+
+  return <div className="catalog__movies-list">
+    {movies.map((movie) => (
+      <MovieWrapped
+        movie={movie}
+        key={movie.id}
+      />
+    ))}
+  </div>;
+};
 
 SmallMovieCardList.propTypes = {
-  movies: PropTypes.array,
-  quantityCard: PropTypes.number,
+  movies: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number,
+    name: PropTypes.string,
+    posterImage: PropTypes.string,
+    previewImage: PropTypes.string,
+    backgroundImage: PropTypes.string,
+    backgroundColor: PropTypes.string,
+    videoLink: PropTypes.string,
+    previewVideoLink: PropTypes.string,
+    description: PropTypes.string,
+    rating: PropTypes.number,
+    scoresCount: PropTypes.number,
+    director: PropTypes.string,
+    starring: PropTypes.array.string,
+    runTime: PropTypes.number,
+    genre: PropTypes.string,
+    released: PropTypes.number,
+    isFavorite: PropTypes.bool,
+  })).isRequired
 };

@@ -1,17 +1,17 @@
-import {createStore, applyMiddleware} from 'redux';
-import {Provider} from 'react-redux';
 import React from 'react';
-import ReactDOM from 'react-dom';
-import thunk from 'redux-thunk';
-import {compose} from 'recompose';
+import ReactDom from 'react-dom';
+import {createStore, applyMiddleware} from "redux";
+import {Provider} from "react-redux";
+import thunk from "redux-thunk";
+import {compose} from "recompose";
 
-import App from './components/app/app.jsx';
-import {reducer} from './reduser/reducer';
-import {createAPI} from './api';
+import {App} from "./components/app/app.jsx";
+
+import {Operation, reducer} from "./reducer/reducer";
+import {createAPI} from "./api";
 
 const init = () => {
   const api = createAPI((...args) => store.dispatch(...args));
-
   const store = createStore(
       reducer,
       compose(
@@ -20,9 +20,12 @@ const init = () => {
       )
   );
 
-  ReactDOM.render(
+  store.dispatch(Operation.loadMovies());
+  store.dispatch(Operation.checkAuthorization());
+
+  ReactDom.render(
       <Provider store={store}>
-        <App/>
+        <App />
       </Provider>,
       document.querySelector(`#root`)
   );

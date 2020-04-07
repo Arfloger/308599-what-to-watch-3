@@ -1,0 +1,67 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Is movie promo rendered 1`] = `
+<section
+  className="movie-card"
+>
+  <div
+    className="movie-card__bg"
+  >
+    <img
+      alt="The Grand Budapest Hotel"
+    />
+  </div>
+  <h1
+    className="visually-hidden"
+  >
+    WTW
+  </h1>
+  <PageHeader />
+  <div
+    className="movie-card__wrap"
+  >
+    <div
+      className="movie-card__info"
+    >
+      <div
+        className="movie-card__poster"
+      >
+        <img
+          alt="The Grand Budapest Hotel"
+          height="327"
+          width="218"
+        />
+      </div>
+      <div
+        className="movie-card__desc"
+      >
+        <h2
+          className="movie-card__title"
+        >
+          The Grand Budapest Hotel
+        </h2>
+        <p
+          className="movie-card__meta"
+        >
+          <span
+            className="movie-card__genre"
+          >
+            Comedy
+          </span>
+          <span
+            className="movie-card__year"
+          >
+            2014
+          </span>
+        </p>
+        <Connect(WithMovieControls)
+          history={Object {}}
+          movieId={0}
+          onFavoriteClick={[Function]}
+          parent="PROMO"
+        />
+      </div>
+    </div>
+  </div>
+</section>
+`;
