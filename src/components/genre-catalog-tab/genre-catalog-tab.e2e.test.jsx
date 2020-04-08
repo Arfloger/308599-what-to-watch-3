@@ -10,10 +10,12 @@ Enzyme.configure({adapter: new Adapter()});
 
 it(`Is tab clicked`, () => {
   const clickHandler = jest.fn();
+  const resetToMinFilms = jest.fn();
   const genreCatalogTab = shallow(<GenreCatalogTab
     movies={films}
     activeTab={`All genres`}
     onTabClick={clickHandler}
+    resetToMinFilms={resetToMinFilms}
   />);
 
   const tabs = genreCatalogTab.find(`.catalog__genres-link`);

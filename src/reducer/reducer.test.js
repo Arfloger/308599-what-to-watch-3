@@ -113,5 +113,23 @@ describe(`Reducers works correctly`, () => {
       currentMovie: films[1]
     }));
   });
+
+  it(`Reducer should return increaseQuantityFilms`, () => {
+    expect(reducer(initialState, {
+      type: ActionType.INCREASE_QUANTITY_FILMS,
+      payload: 8
+    })).toEqual(Object.assign({}, initialState, {
+      cardsOnPage: 16
+    }));
+  });
+
+  it(`Reducer should return resetToMinFilms`, () => {
+    expect(reducer(initialState, {
+      type: ActionType.RESET_TO_MIN_FILMS,
+      payload: 8
+    })).toEqual(Object.assign({}, initialState, {
+      cardsOnPage: 8
+    }));
+  });
 });
 

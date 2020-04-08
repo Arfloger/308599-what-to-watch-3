@@ -1,4 +1,5 @@
 import CommentModel from "../models/comment-model";
+const MIN_CARDS_ON_PAGE = 8;
 
 export const initialState = {
   movies: [],
@@ -6,8 +7,9 @@ export const initialState = {
   comments: [],
   moviesFavorite: [],
   currentMovie: JSON.parse(window.localStorage.getItem(`currentMovie`)),
-  isAuthorized: false,
-  avatar: undefined
+  isAuthorized: true,
+  avatar: undefined,
+  cardsOnPage: MIN_CARDS_ON_PAGE,
 };
 
 const cashCurrentMovie = (movie) => {
@@ -23,7 +25,9 @@ export const ActionType = {
   LOAD_FAVORITE_MOVIES: `LOAD_FAVORITE_MOVIES`,
   CHECK_AUTHORIZATION: `CHECK_AUTHORIZATION`,
   GET_AVATAR: `GET_AVATAR`,
-  UPDATE_CURRENT_MOVIE: `UPDATE_CURRENT_MOVIE`
+  UPDATE_CURRENT_MOVIE: `UPDATE_CURRENT_MOVIE`,
+  INCREASE_QUANTITY_FILMS: `INCREASE_QUANTITY_FILMS`,
+  RESET_TO_MIN_FILMS: `RESET_TO_MIN_FILMS`,
 };
 
 export const ActionCreator = {
@@ -54,7 +58,15 @@ export const ActionCreator = {
   updateCurrentMovie: (movieId) => ({
     type: ActionType.UPDATE_CURRENT_MOVIE,
     payload: movieId
-  })
+  }),
+  increaseQuantityFilms: () => ({
+    type: ActionType.INCREASE_QUANTITY_FILMS,
+    payload: 8,
+  }),
+  resetToMinFilms: () => ({
+    type: ActionType.RESET_TO_MIN_FILMS,
+    payload: MIN_CARDS_ON_PAGE,
+  }),
 };
 
 export const reducer = (state = initialState, action) => {
@@ -86,6 +98,14 @@ export const reducer = (state = initialState, action) => {
     case ActionType.UPDATE_CURRENT_MOVIE:
       return Object.assign({}, state, {
         currentMovie: cashCurrentMovie(state.movies[action.payload])
+      });
+    case ActionType.INCREASE_QUANTITY_FILMS:
+      return Object.assign({}, state, {
+        cardsOnPage: state.cardsOnPage + action.payload,
+      });
+    case ActionType.RESET_TO_MIN_FILMS:
+      return Object.assign({}, state, {
+        cardsOnPage: action.payload,
       });
   }
   return state;

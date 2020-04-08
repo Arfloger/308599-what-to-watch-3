@@ -1,15 +1,16 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
+import {ActionCreator} from "../../reducer/reducer";
 
 export const GenreCatalogTab = (props) => {
-  const {onTabClick, movies, activeTab} = props;
+  const {onTabClick, movies, activeTab, resetToMinFilms} = props;
 
   const handleTabClick = (evt) => {
     const {target} = evt;
 
     evt.preventDefault();
-
+    resetToMinFilms();
     onTabClick(target.textContent.toLowerCase());
   };
 
@@ -54,6 +55,7 @@ export const GenreCatalogTab = (props) => {
 GenreCatalogTab.propTypes = {
   activeTab: PropTypes.string.isRequired,
   onTabClick: PropTypes.func.isRequired,
+  resetToMinFilms: PropTypes.func,
   movies: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number,
     name: PropTypes.string,
@@ -79,4 +81,10 @@ const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, {
   movies: state.movies
 });
 
-export default connect(mapStateToProps)(GenreCatalogTab);
+const mapDispatchToProps = (dispatch) => ({
+  resetToMinFilms: () => {
+    dispatch(ActionCreator.resetToMinFilms());
+  }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(GenreCatalogTab);
